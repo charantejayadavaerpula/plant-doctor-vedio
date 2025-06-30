@@ -1,13 +1,23 @@
+
 import { useState } from "react";
 import { MediaUpload } from "@/components/MediaUpload";
 import { DiseaseReport } from "@/components/DiseaseReport";
 import { ArrowLeft, Home, History, Settings, Users } from "lucide-react";
+
 const Index = () => {
   const [report, setReport] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  return <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
       {/* Mobile Header */}
-      
+      <div className="bg-white/80 backdrop-blur-md border-b border-green-100 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <ArrowLeft className="h-6 w-6 text-gray-600" />
+        <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+          PlantDoc AI
+        </h1>
+        <div className="w-6" />
+      </div>
 
       {/* Main Content */}
       <div className="px-6 py-8 pb-24">
@@ -26,9 +36,15 @@ const Index = () => {
           </p>
         </div>
 
-        <MediaUpload onAnalysisComplete={setReport} isAnalyzing={isAnalyzing} setIsAnalyzing={setIsAnalyzing} />
+        <MediaUpload 
+          onAnalysisComplete={setReport}
+          isAnalyzing={isAnalyzing}
+          setIsAnalyzing={setIsAnalyzing}
+        />
         
-        {report && <DiseaseReport report={report} />}
+        {report && (
+          <DiseaseReport report={report} />
+        )}
       </div>
 
       {/* Bottom Navigation */}
@@ -60,6 +76,8 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
