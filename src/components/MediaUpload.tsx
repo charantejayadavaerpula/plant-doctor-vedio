@@ -1,8 +1,7 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, Video, Image, AlertCircle } from "lucide-react";
+import { Upload, Camera } from "lucide-react";
 import { analyzeMedia } from "@/lib/geminiService";
 import { useToast } from "@/hooks/use-toast";
 
@@ -85,44 +84,33 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
     }
   };
 
-  const getFileIcon = () => {
-    if (!selectedFile) return <Video className="h-5 w-5 text-green-600 mr-2" />;
-    return selectedFile.type.startsWith('video/') 
-      ? <Video className="h-5 w-5 text-green-600 mr-2" />
-      : <Image className="h-5 w-5 text-green-600 mr-2" />;
-  };
-
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle className="flex items-center">
-          <Upload className="h-5 w-5 mr-2" />
-          Upload Plant Video or Image
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div
-          className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-            dragActive
-              ? "border-green-500 bg-green-50"
-              : "border-gray-300 hover:border-green-400"
-          }`}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
-          <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-lg font-medium text-gray-700 mb-2">
-            Drop your plant video or image here or click to browse
-          </p>
+    <div className="space-y-6">
+      {/* Upload Area */}
+      <div
+        className={`border-2 border-dashed rounded-2xl p-8 text-center transition-colors ${
+          dragActive
+            ? "border-green-500 bg-green-50"
+            : "border-gray-300 bg-white"
+        }`}
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+      >
+        <div className="flex flex-col items-center">
+          <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+            <Camera className="h-8 w-8 text-gray-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload</h3>
           <p className="text-sm text-gray-500 mb-4">
-            Supports MP4, MOV, AVI videos and JPG, PNG images up to 50MB
+            Tap to select image or video
           </p>
           <Button
             variant="outline"
             onClick={() => fileInputRef.current?.click()}
             disabled={isAnalyzing}
+            className="border-gray-300"
           >
             Choose File
           </Button>
@@ -134,44 +122,52 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
             className="hidden"
           />
         </div>
+      </div>
 
-        {selectedFile && (
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                {getFileIcon()}
-                <div>
-                  <p className="font-medium">{selectedFile.name}</p>
-                  <p className="text-sm text-gray-500">
-                    {(selectedFile.size / 1024 / 1024).toFixed(2)} MB • {selectedFile.type.startsWith('video/') ? 'Video' : 'Image'}
-                  </p>
-                </div>
+      {/* Selected File Display */}
+      {selectedFile && (
+        <div className="bg-white rounded-xl p-4 border border-gray-200">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                {selectedFile.type.startsWith('video/') ? (
+                  <div className="w-4 h-4 bg-green-600 rounded-sm"></div>
+                ) : (
+                  <div className="w-4 h-4 bg-green-600 rounded"></div>
+                )}
               </div>
-              <Button
-                onClick={handleAnalyze}
-                disabled={isAnalyzing}
-                className="bg-green-600 hover:bg-green-700"
-              >
-                {isAnalyzing ? "Analyzing..." : "Analyze Plant"}
-              </Button>
+              <div>
+                <p className="font-medium text-gray-900 text-sm">{selectedFile.name}</p>
+                <p className="text-xs text-gray-500">
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                </p>
+              </div>
             </div>
           </div>
-        )}
-
-        <div className="bg-blue-50 rounded-lg p-4 flex items-start">
-          <AlertCircle className="h-5 w-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-blue-800">
-            <p className="font-medium mb-1">Tips for best results:</p>
-            <ul className="space-y-1">
-              <li>• Capture the affected plant parts clearly</li>
-              <li>• Ensure good lighting conditions</li>
-              <li>• For videos: keep steady and focused</li>
-              <li>• For images: use high resolution</li>
-              <li>• Include close-up shots of symptoms</li>
-            </ul>
-          </div>
         </div>
-      </CardContent>
-    </Card>
+      )}
+
+      {/* Get Diagnosis Button */}
+      <Button
+        onClick={handleAnalyze}
+        disabled={!selectedFile || isAnalyzing}
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl text-lg font-semibold"
+      >
+        {isAnalyzing ? "Analyzing..." : "Get Diagnosis"}
+      </Button>
+
+      {/* Description */}
+      <div className="flex items-start space-x-3 px-2">
+        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+          <div className="w-3 h-3 border-2 border-green-600 rounded-full"></div>
+          <div className="w-2 h-1 bg-green-600 rounded-full -ml-1 mt-1"></div>
+        </div>
+        <div>
+          <p className="text-gray-900 font-medium">
+            Get a plant disease diagnosis for gardeners and farmers
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
