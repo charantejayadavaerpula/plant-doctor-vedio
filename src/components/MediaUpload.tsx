@@ -1,7 +1,7 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Upload, Camera } from "lucide-react";
+import { Upload, Camera, Image, Video, CheckCircle } from "lucide-react";
 import { analyzeMedia } from "@/lib/geminiService";
 import { useToast } from "@/hooks/use-toast";
 
@@ -70,7 +70,7 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
       onAnalysisComplete(report);
       toast({
         title: "Analysis complete!",
-        description: "Your plant disease report is ready"
+        description: "Your plant disease report is ready",
       });
     } catch (error) {
       console.error('Analysis error:', error);
@@ -85,13 +85,13 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Upload Area */}
       <div
-        className={`border-2 border-dashed rounded-2xl p-8 text-center transition-colors ${
+        className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 ${
           dragActive
-            ? "border-green-500 bg-green-50"
-            : "border-gray-300 bg-white"
+            ? "border-green-400 bg-green-50 scale-[1.02]"
+            : "border-gray-200 bg-white/60 backdrop-blur-sm hover:border-green-300 hover:bg-green-50/50"
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -99,19 +99,22 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
         onDrop={handleDrop}
       >
         <div className="flex flex-col items-center">
-          <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
-            <Camera className="h-8 w-8 text-gray-600" />
+          <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-blue-100 rounded-3xl flex items-center justify-center mb-6 shadow-sm">
+            <Camera className="h-10 w-10 text-green-600" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload</h3>
-          <p className="text-sm text-gray-500 mb-4">
-            Tap to select image or video
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Upload Media</h3>
+          <p className="text-gray-500 mb-6 leading-relaxed">
+            Drag and drop or tap to select
+            <br />
+            <span className="text-sm">Images (JPG, PNG) or Videos (MP4, MOV)</span>
           </p>
           <Button
             variant="outline"
             onClick={() => fileInputRef.current?.click()}
             disabled={isAnalyzing}
-            className="border-gray-300"
+            className="border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300 px-8 py-3 rounded-2xl font-semibold"
           >
+            <Upload className="h-5 w-5 mr-2" />
             Choose File
           </Button>
           <input
@@ -126,46 +129,61 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
 
       {/* Selected File Display */}
       {selectedFile && (
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+            <div className="flex items-center flex-1">
+              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
                 {selectedFile.type.startsWith('video/') ? (
-                  <div className="w-4 h-4 bg-green-600 rounded-sm"></div>
+                  <Video className="h-7 w-7 text-white" />
                 ) : (
-                  <div className="w-4 h-4 bg-green-600 rounded"></div>
+                  <Image className="h-7 w-7 text-white" />
                 )}
               </div>
-              <div>
-                <p className="font-medium text-gray-900 text-sm">{selectedFile.name}</p>
-                <p className="text-xs text-gray-500">
-                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 text-base truncate">{selectedFile.name}</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB • {selectedFile.type.split('/')[1].toUpperCase()}
                 </p>
               </div>
+              <CheckCircle className="h-6 w-6 text-green-500 ml-3" />
             </div>
           </div>
         </div>
       )}
 
-      {/* Get Diagnosis Button */}
+      {/* Analysis Button */}
       <Button
         onClick={handleAnalyze}
         disabled={!selectedFile || isAnalyzing}
-        className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl text-lg font-semibold"
+        className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-6 rounded-3xl text-lg font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
-        {isAnalyzing ? "Analyzing..." : "Get Diagnosis"}
+        {isAnalyzing ? (
+          <div className="flex items-center">
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+            Analyzing Plant...
+          </div>
+        ) : (
+          <>
+            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mr-3">
+              🔍
+            </div>
+            Get Plant Diagnosis
+          </>
+        )}
       </Button>
 
-      {/* Description */}
-      <div className="flex items-start space-x-3 px-2">
-        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-          <div className="w-3 h-3 border-2 border-green-600 rounded-full"></div>
-          <div className="w-2 h-1 bg-green-600 rounded-full -ml-1 mt-1"></div>
-        </div>
-        <div>
-          <p className="text-gray-900 font-medium">
-            Get a plant disease diagnosis for gardeners and farmers
-          </p>
+      {/* Info Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-3xl p-6 border border-blue-100">
+        <div className="flex items-start space-x-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center flex-shrink-0">
+            <div className="text-white text-xl">🤖</div>
+          </div>
+          <div>
+            <h4 className="font-bold text-gray-900 mb-2">AI-Powered Analysis</h4>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Our advanced AI analyzes your plant images and videos to detect diseases, pests, and nutrient deficiencies with high accuracy.
+            </p>
+          </div>
         </div>
       </div>
     </div>
