@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { VideoUpload } from "@/components/VideoUpload";
+import { MediaUpload } from "@/components/MediaUpload";
 import { DiseaseReport } from "@/components/DiseaseReport";
 import { Leaf } from "lucide-react";
 
@@ -17,12 +17,12 @@ const Index = () => {
             <h1 className="text-4xl font-bold text-gray-800">Plant Vision AI</h1>
           </div>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Upload a video of your plant to get an AI-powered disease analysis and treatment recommendations
+            Upload a video or image of your plant to get an AI-powered disease analysis and treatment recommendations
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <VideoUpload 
+          <MediaUpload 
             onAnalysisComplete={setReport}
             isAnalyzing={isAnalyzing}
             setIsAnalyzing={setIsAnalyzing}

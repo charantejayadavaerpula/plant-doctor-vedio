@@ -1,22 +1,21 @@
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = "AIzaSyCorMyOjbOOJDcPkWzz0UzPTKoPEM74z4g";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-export const analyzeVideo = async (videoFile: File): Promise<string> => {
+export const analyzeMedia = async (file: File): Promise<string> => {
   try {
-    console.log('Starting video analysis...');
+    console.log('Starting media analysis...');
     
     // Convert file to base64
-    const fileBase64 = await fileToBase64(videoFile);
+    const fileBase64 = await fileToBase64(file);
     
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     const prompt = `
-    Analyze this video of a plant and provide a comprehensive disease analysis report. Please include:
+    Analyze this ${file.type.startsWith('video/') ? 'video' : 'image'} of a plant and provide a comprehensive disease analysis report. Please include:
 
-    1. **Plant Identification**: What type of plant is shown in the video?
+    1. **Plant Identification**: What type of plant is shown in the ${file.type.startsWith('video/') ? 'video' : 'image'}?
     
     2. **Disease Assessment**: 
        - Are there any visible signs of disease or pest damage?
@@ -40,7 +39,7 @@ export const analyzeVideo = async (videoFile: File): Promise<string> => {
     const result = await model.generateContent([
       {
         inlineData: {
-          mimeType: videoFile.type,
+          mimeType: file.type,
           data: fileBase64,
         },
       },
@@ -50,10 +49,13 @@ export const analyzeVideo = async (videoFile: File): Promise<string> => {
     const response = await result.response;
     return response.text();
   } catch (error) {
-    console.error('Error analyzing video:', error);
-    throw new Error('Failed to analyze video. Please try again.');
+    console.error('Error analyzing media:', error);
+    throw new Error('Failed to analyze media. Please try again.');
   }
 };
+
+// Keep the old function for backward compatibility
+export const analyzeVideo = analyzeMedia;
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -61,7 +63,7 @@ const fileToBase64 = (file: File): Promise<string> => {
     reader.readAsDataURL(file);
     reader.onload = () => {
       const base64 = reader.result as string;
-      // Remove the data:video/mp4;base64, prefix
+      // Remove the data:video/mp4;base64, or data:image/jpeg;base64, prefix
       const base64Data = base64.split(',')[1];
       resolve(base64Data);
     };
