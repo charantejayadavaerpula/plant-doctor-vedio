@@ -1,7 +1,6 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { X, RotateCcw, FlashOff, Timer } from "lucide-react";
+import { X, RotateCcw, Zap, Timer } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface CameraCaptureProps {
@@ -182,7 +181,7 @@ export const CameraCapture = ({ onCapture, onClose, mode }: CameraCaptureProps) 
                   size="icon"
                   className="w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm text-white hover:bg-black/50 border-0"
                 >
-                  <FlashOff className="h-4 w-4" />
+                  <Zap className="h-4 w-4" />
                 </Button>
                 <Button
                   variant="ghost"
