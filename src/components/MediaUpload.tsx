@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Upload, Camera, Image, Video, CheckCircle } from "lucide-react";
 import { analyzeMedia } from "@/lib/geminiService";
 import { useToast } from "@/hooks/use-toast";
+import { CameraCapture } from "./CameraCapture";
 
 interface MediaUploadProps {
   onAnalysisComplete: (report: string) => void;
@@ -14,6 +15,8 @@ interface MediaUploadProps {
 export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }: MediaUploadProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const [cameraMode, setCameraMode] = useState<'photo' | 'video'>('photo');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -84,8 +87,53 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
     }
   };
 
+  const handleCameraCapture = (file: File) => {
+    setSelectedFile(file);
+    setShowCamera(false);
+  };
+
+  const openCamera = (mode: 'photo' | 'video') => {
+    setCameraMode(mode);
+    setShowCamera(true);
+  };
+
+  if (showCamera) {
+    return (
+      <CameraCapture
+        mode={cameraMode}
+        onCapture={handleCameraCapture}
+        onClose={() => setShowCamera(false)}
+      />
+    );
+  }
+
   return (
     <div className="space-y-8">
+      {/* Camera Options */}
+      <div className="grid grid-cols-2 gap-4">
+        <Button
+          onClick={() => openCamera('photo')}
+          disabled={isAnalyzing}
+          className="h-32 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-3xl flex flex-col items-center justify-center space-y-2 shadow-lg"
+        >
+          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+            <Image className="h-6 w-6" />
+          </div>
+          <span className="font-semibold">Take Photo</span>
+        </Button>
+        
+        <Button
+          onClick={() => openCamera('video')}
+          disabled={isAnalyzing}
+          className="h-32 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-3xl flex flex-col items-center justify-center space-y-2 shadow-lg"
+        >
+          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+            <Video className="h-6 w-6" />
+          </div>
+          <span className="font-semibold">Record Video</span>
+        </Button>
+      </div>
+
       {/* Upload Area */}
       <div
         className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 ${
@@ -93,16 +141,47 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
             ? "border-green-400 bg-green-50 scale-[1.02]"
             : "border-gray-200 bg-white/60 backdrop-blur-sm hover:border-green-300 hover:bg-green-50/50"
         }`}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
+        onDragEnter={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDragActive(true);
+        }}
+        onDragLeave={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDragActive(false);
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDragActive(true);
+        }}
+        onDrop={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDragActive(false);
+
+          const files = Array.from(e.dataTransfer.files);
+          const mediaFile = files.find(file => 
+            file.type.startsWith('video/') || file.type.startsWith('image/')
+          );
+          
+          if (mediaFile) {
+            setSelectedFile(mediaFile);
+          } else {
+            toast({
+              title: "Invalid file type",
+              description: "Please upload a video or image file",
+              variant: "destructive"
+            });
+          }
+        }}
       >
         <div className="flex flex-col items-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-blue-100 rounded-3xl flex items-center justify-center mb-6 shadow-sm">
-            <Camera className="h-10 w-10 text-green-600" />
+          <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center mb-6 shadow-sm">
+            <Upload className="h-10 w-10 text-gray-600" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Upload Media</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Or Upload File</h3>
           <p className="text-gray-500 mb-6 leading-relaxed">
             Drag and drop or tap to select
             <br />
@@ -112,7 +191,7 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
             variant="outline"
             onClick={() => fileInputRef.current?.click()}
             disabled={isAnalyzing}
-            className="border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300 px-8 py-3 rounded-2xl font-semibold"
+            className="border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 px-8 py-3 rounded-2xl font-semibold"
           >
             <Upload className="h-5 w-5 mr-2" />
             Choose File
@@ -121,7 +200,18 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
             ref={fileInputRef}
             type="file"
             accept="video/*,image/*"
-            onChange={handleFileSelect}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file && (file.type.startsWith('video/') || file.type.startsWith('image/'))) {
+                setSelectedFile(file);
+              } else {
+                toast({
+                  title: "Invalid file type",
+                  description: "Please upload a video or image file",
+                  variant: "destructive"
+                });
+              }
+            }}
             className="hidden"
           />
         </div>
