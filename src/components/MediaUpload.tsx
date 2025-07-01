@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload, Camera, Image, Video, CheckCircle } from "lucide-react";
@@ -108,35 +107,31 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
   }
 
   return (
-    <div className="space-y-8">
-      {/* Camera Options */}
-      <div className="grid grid-cols-2 gap-4">
+    <div className="space-y-6">
+      {/* Camera Options - Smaller Mobile Buttons */}
+      <div className="flex gap-3 justify-center">
         <Button
           onClick={() => openCamera('photo')}
           disabled={isAnalyzing}
-          className="h-32 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-3xl flex flex-col items-center justify-center space-y-2 shadow-lg"
+          className="h-12 px-6 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl flex items-center space-x-2 shadow-md text-sm font-medium"
         >
-          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
-            <Image className="h-6 w-6" />
-          </div>
-          <span className="font-semibold">Take Photo</span>
+          <Camera className="h-4 w-4" />
+          <span>Photo</span>
         </Button>
         
         <Button
           onClick={() => openCamera('video')}
           disabled={isAnalyzing}
-          className="h-32 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-3xl flex flex-col items-center justify-center space-y-2 shadow-lg"
+          className="h-12 px-6 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-2xl flex items-center space-x-2 shadow-md text-sm font-medium"
         >
-          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
-            <Video className="h-6 w-6" />
-          </div>
-          <span className="font-semibold">Record Video</span>
+          <Video className="h-4 w-4" />
+          <span>Video</span>
         </Button>
       </div>
 
-      {/* Upload Area */}
+      {/* Upload Area - Smaller */}
       <div
-        className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 ${
+        className={`relative border-2 border-dashed rounded-2xl p-6 text-center transition-all duration-300 ${
           dragActive
             ? "border-green-400 bg-green-50 scale-[1.02]"
             : "border-gray-200 bg-white/60 backdrop-blur-sm hover:border-green-300 hover:bg-green-50/50"
@@ -178,22 +173,22 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
         }}
       >
         <div className="flex flex-col items-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center mb-6 shadow-sm">
-            <Upload className="h-10 w-10 text-gray-600" />
+          <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+            <Upload className="h-8 w-8 text-gray-600" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Or Upload File</h3>
-          <p className="text-gray-500 mb-6 leading-relaxed">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload File</h3>
+          <p className="text-gray-500 mb-4 text-sm leading-relaxed">
             Drag and drop or tap to select
             <br />
-            <span className="text-sm">Images (JPG, PNG) or Videos (MP4, MOV)</span>
+            <span className="text-xs">Images (JPG, PNG) or Videos (MP4, MOV)</span>
           </p>
           <Button
             variant="outline"
             onClick={() => fileInputRef.current?.click()}
             disabled={isAnalyzing}
-            className="border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 px-8 py-3 rounded-2xl font-semibold"
+            className="border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 px-6 py-2 rounded-xl font-medium text-sm"
           >
-            <Upload className="h-5 w-5 mr-2" />
+            <Upload className="h-4 w-4 mr-2" />
             Choose File
           </Button>
           <input
@@ -219,23 +214,23 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
 
       {/* Selected File Display */}
       {selectedFile && (
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-gray-100 shadow-sm">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between">
             <div className="flex items-center flex-1">
-              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-3 shadow-sm">
                 {selectedFile.type.startsWith('video/') ? (
-                  <Video className="h-7 w-7 text-white" />
+                  <Video className="h-6 w-6 text-white" />
                 ) : (
-                  <Image className="h-7 w-7 text-white" />
+                  <Image className="h-6 w-6 text-white" />
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-gray-900 text-base truncate">{selectedFile.name}</p>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="font-medium text-gray-900 text-sm truncate">{selectedFile.name}</p>
+                <p className="text-xs text-gray-500 mt-1">
                   {(selectedFile.size / 1024 / 1024).toFixed(2)} MB • {selectedFile.type.split('/')[1].toUpperCase()}
                 </p>
               </div>
-              <CheckCircle className="h-6 w-6 text-green-500 ml-3" />
+              <CheckCircle className="h-5 w-5 text-green-500 ml-3" />
             </div>
           </div>
         </div>
@@ -245,16 +240,16 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
       <Button
         onClick={handleAnalyze}
         disabled={!selectedFile || isAnalyzing}
-        className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-6 rounded-3xl text-lg font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-2xl text-base font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
         {isAnalyzing ? (
           <div className="flex items-center">
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
             Analyzing Plant...
           </div>
         ) : (
           <>
-            <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mr-3">
+            <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center mr-2">
               🔍
             </div>
             Get Plant Diagnosis
@@ -262,16 +257,16 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
         )}
       </Button>
 
-      {/* Info Section */}
-      <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-3xl p-6 border border-blue-100">
-        <div className="flex items-start space-x-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-            <div className="text-white text-xl">🤖</div>
+      {/* Info Section - Smaller */}
+      <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-4 border border-blue-100">
+        <div className="flex items-start space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="text-white text-lg">🤖</div>
           </div>
           <div>
-            <h4 className="font-bold text-gray-900 mb-2">AI-Powered Analysis</h4>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Our advanced AI analyzes your plant images and videos to detect diseases, pests, and nutrient deficiencies with high accuracy.
+            <h4 className="font-semibold text-gray-900 mb-1 text-sm">AI-Powered Analysis</h4>
+            <p className="text-gray-600 text-xs leading-relaxed">
+              Our advanced AI analyzes your plant images and videos to detect diseases, pests, and nutrient deficiencies.
             </p>
           </div>
         </div>
