@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload, Camera, Image, Video, CheckCircle, Sparkles, Zap } from "lucide-react";
@@ -141,10 +142,18 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-        {/* Animated Background */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden">
-          <div className="absolute top-4 right-4 w-8 h-8 bg-green-200/30 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-6 left-6 w-6 h-6 bg-emerald-200/40 rounded-full animate-pulse delay-1000"></div>
+        {/* Small Upload Button */}
+        <div className="absolute top-4 right-4">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isAnalyzing}
+            className="bg-white/90 backdrop-blur-sm border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm"
+          >
+            <Upload className="h-3 w-3 mr-1" />
+            Upload File
+          </Button>
         </div>
 
         <div className="relative flex flex-col items-center">
