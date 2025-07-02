@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { MediaUpload } from "@/components/MediaUpload";
 import { DiseaseReport } from "@/components/DiseaseReport";
@@ -13,8 +14,12 @@ const Index = () => {
       <div className="px-6 py-8 pb-24">
         {/* Hero Section */}
         <div className="text-center mb-10">
-          <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-            <div className="text-3xl">🌱</div>
+          <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg overflow-hidden">
+            <img 
+              src="/lovable-uploads/4d3c17f7-561d-4920-b95d-b6e89e18aaff.png" 
+              alt="KISAN-G Logo" 
+              className="w-16 h-auto object-contain"
+            />
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
             AI Plant Disease
