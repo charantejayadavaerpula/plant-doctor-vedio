@@ -53,23 +53,23 @@ const Index = () => {
               Upload photos or videos of your crops to get instant AI analysis and expert treatment recommendations
             </p>
             
-            {/* Feature Cards */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-green-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
-                <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                  <Sun className="h-5 w-5 text-white" />
+            {/* Feature Cards - Made Smaller */}
+            <div className="grid grid-cols-3 gap-3 mb-8">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-green-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-1">
+                  <Sun className="h-4 w-4 text-white" />
                 </div>
                 <p className="text-xs font-medium text-gray-700">Fast Analysis</p>
               </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-blue-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
-                <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                  <Leaf className="h-5 w-5 text-white" />
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-blue-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
+                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-1">
+                  <Leaf className="h-4 w-4 text-white" />
                 </div>
                 <p className="text-xs font-medium text-gray-700">Expert Care</p>
               </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-emerald-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
-                <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                  <Droplets className="h-5 w-5 text-white" />
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-emerald-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
+                <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-1">
+                  <Droplets className="h-4 w-4 text-white" />
                 </div>
                 <p className="text-xs font-medium text-gray-700">Healthy Crops</p>
               </div>
