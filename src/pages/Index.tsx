@@ -1,15 +1,11 @@
-
 import { useState } from "react";
 import { MediaUpload } from "@/components/MediaUpload";
 import { DiseaseReport } from "@/components/DiseaseReport";
 import { ArrowLeft, Home, History, Settings, Users, Leaf, Sun, Droplets } from "lucide-react";
-
 const Index = () => {
   const [report, setReport] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-lime-50 relative overflow-hidden">
+  return <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-lime-50 relative overflow-hidden">
       {/* Decorative Background Elements - Different for mobile/desktop */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-20 sm:w-32 h-20 sm:h-32 bg-green-200/20 rounded-full blur-xl animate-pulse"></div>
@@ -24,11 +20,7 @@ const Index = () => {
           {/* Logo with Animation - Mobile: Smaller, Desktop: Larger */}
           <div className="relative mb-6 sm:mb-8">
             <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto shadow-2xl border border-white/20 hover:scale-105 transition-all duration-300">
-              <img 
-                src="/lovable-uploads/4d3c17f7-561d-4920-b95d-b6e89e18aaff.png" 
-                alt="KISAN-G Logo" 
-                className="w-16 sm:w-20 h-auto object-contain"
-              />
+              <img src="/lovable-uploads/4d3c17f7-561d-4920-b95d-b6e89e18aaff.png" alt="KISAN-G Logo" className="w-16 sm:w-20 h-auto object-contain" />
             </div>
             {/* Floating Icons - Mobile: Smaller, Desktop: Larger */}
             <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full flex items-center justify-center animate-bounce delay-300">
@@ -40,9 +32,7 @@ const Index = () => {
           </div>
 
           {/* Title with Gradient - Mobile: Smaller, Desktop: Larger */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-700 via-emerald-600 to-green-800 bg-clip-text text-transparent mb-3 sm:mb-4 leading-tight">
-            Smart Plant Care
-          </h1>
+          
           <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4 sm:mb-6">
             AI-Powered Disease Detection
           </h2>
@@ -54,40 +44,15 @@ const Index = () => {
             </p>
             
             {/* Feature Cards - Mobile: Smaller grid, Desktop: Inline */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-green-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-1">
-                  <Sun className="h-4 w-4 text-white" />
-                </div>
-                <p className="text-xs font-medium text-gray-700">Fast Analysis</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-blue-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-1">
-                  <Leaf className="h-4 w-4 text-white" />
-                </div>
-                <p className="text-xs font-medium text-gray-700">Expert Care</p>
-              </div>
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-emerald-100 hover:bg-white/80 transition-all duration-300 hover:scale-105">
-                <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-1">
-                  <Droplets className="h-4 w-4 text-white" />
-                </div>
-                <p className="text-xs font-medium text-gray-700">Healthy Crops</p>
-              </div>
-            </div>
+            
           </div>
         </div>
 
-        <MediaUpload 
-          onAnalysisComplete={setReport} 
-          isAnalyzing={isAnalyzing} 
-          setIsAnalyzing={setIsAnalyzing} 
-        />
+        <MediaUpload onAnalysisComplete={setReport} isAnalyzing={isAnalyzing} setIsAnalyzing={setIsAnalyzing} />
         
-        {report && (
-          <div className="animate-fade-in mt-4 sm:mt-0">
+        {report && <div className="animate-fade-in mt-4 sm:mt-0">
             <DiseaseReport report={report} />
-          </div>
-        )}
+          </div>}
       </div>
 
       {/* Bottom Navigation - Mobile: Compact, Desktop: Standard */}
@@ -123,8 +88,6 @@ const Index = () => {
         {/* Safe area for phones with home indicators */}
         <div className="h-1 sm:h-2 bg-transparent"></div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
