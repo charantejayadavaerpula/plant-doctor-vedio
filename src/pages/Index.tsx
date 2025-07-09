@@ -17,7 +17,7 @@ const Index = () => {
             {/* Large Plant Image Display */}
             <div className="relative mb-8">
               <div className="w-full aspect-square bg-gradient-to-br from-green-400 to-green-600 rounded-3xl overflow-hidden shadow-2xl">
-                <img src="/lovable-uploads/f9c0222d-267e-4cd1-9573-dbd50d79ff00.png" alt="Plant Disease Detection" className="w-full h-full object-cover" />
+                <img alt="Plant Disease Detection" className="w-full h-full object-cover" src="/lovable-uploads/613cd689-5b70-426b-a4b5-6db8b5d329c4.jpg" />
               </div>
             </div>
 

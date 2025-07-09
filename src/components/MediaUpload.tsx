@@ -94,11 +94,11 @@ export const MediaUpload = ({
   return <div className="space-y-4 md:space-y-8 animate-fade-in">
       {/* Camera and Upload Options - Small buttons in horizontal line */}
       <div className="flex gap-3 justify-center">
-        <Button onClick={() => openCamera('photo')} disabled={isAnalyzing} className="h-12 w-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0">
+        <Button onClick={() => openCamera('photo')} disabled={isAnalyzing} className="h-45 w-45 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0">
           <Camera className="h-5 w-5" />
         </Button>
         
-        <Button onClick={() => openCamera('video')} disabled={isAnalyzing} className="h-12 w-12 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0">
+        <Button onClick={() => openCamera('video')} disabled={isAnalyzing} className="h-45 w-12 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0">
           <Video className="h-5 w-5" />
         </Button>
 
