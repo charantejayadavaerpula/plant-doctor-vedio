@@ -8,9 +8,7 @@ const Index = () => {
   return <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
       <div className="text-center py-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-          Plant Disease Detection
-        </h1>
+        <h1 className="text-xl sm:text-4xl font-bold text-gray-900 mb-2">Plant Disease Detector by &lt;charan&gt;</h1>
       </div>
 
       {/* Main Content */}
