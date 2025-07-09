@@ -109,24 +109,33 @@ export const MediaUpload = ({ onAnalysisComplete, isAnalyzing, setIsAnalyzing }:
 
   return (
     <div className="space-y-4 md:space-y-8 animate-fade-in">
-      {/* Camera Options - Mobile: Stacked, Desktop: Side by side */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+      {/* Camera and Upload Options - Small buttons in horizontal line */}
+      <div className="flex gap-3 justify-center">
         <Button
           onClick={() => openCamera('photo')}
           disabled={isAnalyzing}
-          className="h-12 sm:h-14 px-6 sm:px-8 bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white rounded-xl sm:rounded-2xl flex items-center justify-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0 w-full sm:w-auto"
+          className="h-10 px-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
         >
-          <Camera className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="font-medium sm:font-semibold text-sm sm:text-base">Take Photo</span>
+          <Camera className="h-4 w-4" />
+          <span className="font-medium text-sm">Take Photo</span>
         </Button>
         
         <Button
           onClick={() => openCamera('video')}
           disabled={isAnalyzing}
-          className="h-12 sm:h-14 px-6 sm:px-8 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 hover:from-blue-600 hover:via-indigo-600 hover:to-blue-700 text-white rounded-xl sm:rounded-2xl flex items-center justify-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0 w-full sm:w-auto"
+          className="h-10 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
         >
-          <Video className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="font-medium sm:font-semibold text-sm sm:text-base">Record Video</span>
+          <Video className="h-4 w-4" />
+          <span className="font-medium text-sm">Record Video</span>
+        </Button>
+
+        <Button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isAnalyzing}
+          className="h-10 px-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
+        >
+          <Upload className="h-4 w-4" />
+          <span className="font-medium text-sm">Upload Media</span>
         </Button>
       </div>
 
