@@ -159,5 +159,14 @@ export const MediaUpload = ({
           </div>
         </div>
       </div>
+      
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*,video/*"
+        onChange={handleFileSelect}
+        className="hidden"
+      />
     </div>;
 };
