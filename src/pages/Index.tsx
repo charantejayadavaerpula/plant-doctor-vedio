@@ -23,42 +23,12 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
-                {/* Capture Button */}
-                <div className="flex flex-col items-center">
-                  <button className="w-16 h-16 bg-gray-700 rounded-2xl flex items-center justify-center mb-3 shadow-lg hover:bg-gray-600 transition-colors">
-                    <Camera className="h-8 w-8 text-white" />
-                  </button>
-                  <span className="text-sm font-medium text-gray-700">Capture</span>
-                </div>
-
-                {/* Capture Video Button */}
-                <div className="flex flex-col items-center">
-                  <button className="w-16 h-16 bg-gray-700 rounded-2xl flex items-center justify-center mb-3 shadow-lg hover:bg-gray-600 transition-colors">
-                    <Video className="h-8 w-8 text-white" />
-                  </button>
-                  <span className="text-sm font-medium text-gray-700">Capture Video</span>
-                </div>
-
-                {/* Upload from Gallery Button */}
-                <div className="flex flex-col items-center">
-                  <button className="w-16 h-16 bg-gray-700 rounded-2xl flex items-center justify-center mb-3 shadow-lg hover:bg-gray-600 transition-colors">
-                    <Image className="h-8 w-8 text-white" />
-                  </button>
-                  <span className="text-sm font-medium text-gray-700 text-center">Upload from Gallery</span>
-                </div>
-              </div>
-            </div>
+            {/* Show MediaUpload component for functionality */}
+            <MediaUpload onAnalysisComplete={setReport} isAnalyzing={isAnalyzing} setIsAnalyzing={setIsAnalyzing} />
           </div> : <div className="w-full max-w-4xl mx-auto animate-fade-in">
             <DiseaseReport report={report} />
           </div>}
 
-        {/* Hidden MediaUpload component for functionality */}
-        <div className="hidden">
-          <MediaUpload onAnalysisComplete={setReport} isAnalyzing={isAnalyzing} setIsAnalyzing={setIsAnalyzing} />
-        </div>
       </div>
 
       {/* Bottom Navigation */}
